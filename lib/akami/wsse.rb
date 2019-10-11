@@ -48,7 +48,7 @@ module Akami
       self.digest = digest
     end
 
-    attr_accessor :username, :password, :created_at, :expires_at, :signature, :verify_response
+    attr_accessor :username, :password, :created_at, :expires_at, :signature, :verify_response, :must_understand
 
     def sign_with=(klass)
       @signature = klass
@@ -61,6 +61,10 @@ module Akami
     # Returns whether to use WSSE digest. Defaults to +false+.
     def digest?
       !!@digest
+    end
+
+    def must_understand?
+      !!@must_understand
     end
 
     attr_writer :digest
@@ -157,6 +161,11 @@ module Akami
         },
         :attributes! => { "wsse:Security" => { "xmlns:wsse" => WSE_NAMESPACE } }
       }
+
+      if must_understand?
+        extra_info ||= {}
+        extra_info.merge!("soapenv:mustUnderstand" => "1")
+      end
 
       unless extra_info.empty?
         sec_hash["wsse:Security"].merge!(extra_info)
