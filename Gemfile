@@ -6,5 +6,5 @@ platform :rbx do
   gem 'racc'
   gem 'rubysl'
   gem 'rubinius-coverage'
+  gem 'akami', path: '../akami'
 end
-

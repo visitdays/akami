@@ -63,6 +63,10 @@ module Akami
       !!@digest
     end
 
+    def must_understand=(value)
+      @must_understand = value
+    end
+
     def must_understand?
       !!@must_understand
     end
